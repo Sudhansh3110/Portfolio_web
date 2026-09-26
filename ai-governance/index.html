@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Sudhansh Arora, AI governance portfolio written as an AI model card.">
+<meta name="theme-color" content="#0B0D12">
+<meta property="og:title" content="Sudhansh Arora Model Card | AI Governance">
+<meta property="og:description" content="Sudhansh Arora, AI governance portfolio written as an AI model card.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="../assets/sudhansh-arora.jpg">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<title>Sudhansh Arora Model Card</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;600;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Design read: AI governance portfolio for hiring managers, written as an AI model card.
+   Dark-first documentation language with a full light theme. Dials: variance 5, motion 3, density 5. */
+:root{
+  color-scheme:dark;
+  --bg:#0B0D12; --panel:#12151D; --panel2:#181C26; --line:#232838; --ink:#E8EAF0; --muted:#8C92A5;
+  --accent:#F2B84B; --accent-ink:#1A1405; --accent-text:#F2B84B; --ok:#4FD1B5; --ok-text:#4FD1B5; --warn:#F2B84B; --uc:#F5B400;
+  --shadow:0 12px 32px rgba(0,0,0,.35);
+  --sans:"Schibsted Grotesk","Helvetica Neue",Arial,sans-serif;
+  --mono:"JetBrains Mono","SFMono-Regular",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: light){
+  :root:not([data-theme="dark"]){
+    color-scheme:light;
+    --bg:#F5F6F8; --panel:#FFFFFF; --panel2:#EEF0F4; --line:#DDE1E8; --ink:#141821; --muted:#565D71;
+    --accent:#F2B84B; --accent-ink:#1A1405; --accent-text:#8F5B00; --ok:#0F8A70; --ok-text:#0B7560; --warn:#8F5B00; --uc:#E0A200;
+    --shadow:0 12px 32px rgba(20,24,33,.08);
+  }
+}
+:root[data-theme="light"]{
+  color-scheme:light;
+  --bg:#F5F6F8; --panel:#FFFFFF; --panel2:#EEF0F4; --line:#DDE1E8; --ink:#141821; --muted:#565D71;
+  --accent:#F2B84B; --accent-ink:#1A1405; --accent-text:#8F5B00; --ok:#0F8A70; --ok-text:#0B7560; --warn:#8F5B00; --uc:#E0A200;
+  --shadow:0 12px 32px rgba(20,24,33,.08);
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+img{max-width:100%}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased}
+a{color:var(--accent-text);text-underline-offset:3px}
+a:hover{text-decoration-thickness:2px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+button{font:inherit;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.skip{position:absolute;left:-999px;top:8px;z-index:20;background:var(--panel);color:var(--ink);padding:8px 12px;border-radius:6px}
+.skip:focus{left:16px}
+
+.shell{display:grid;grid-template-columns:240px minmax(0,1fr) 260px;max-width:1440px;margin:0 auto}
+.side{border-right:1px solid var(--line);padding:28px 18px;position:sticky;top:0;height:100vh;overflow:auto}
+.crumbs{font-family:var(--mono);font-size:13px;color:var(--muted);margin:0 0 24px 10px}
+.crumbs b{color:var(--ink);font-weight:400}
+.toc{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.toc a{display:block;padding:7px 10px;border-radius:6px;color:var(--muted);text-decoration:none;font-size:14px;transition:background-color .15s,color .15s,box-shadow .15s}
+.toc a:hover{background:var(--panel2);color:var(--ink)}
+.toc a[aria-current="true"]{background:var(--panel2);color:var(--ink);box-shadow:inset 2px 0 0 var(--accent)}
+.side .grp{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin:22px 10px 8px}
+.side .links a{display:block;padding:6px 10px;font-size:14px;color:var(--muted);text-decoration:none;border-radius:6px}
+.side .links a:hover{color:var(--ink);background:var(--panel2)}
+
+main{padding:40px 56px 96px;min-width:0}
+.topline{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.path{font-family:var(--mono);font-size:12px;color:var(--muted)}
+h1{font-family:var(--mono);font-weight:400;font-size:clamp(30px,4.4vw,48px);letter-spacing:-.02em;line-height:1.1;margin:12px 0 12px;overflow-wrap:anywhere}
+h1 span{color:var(--accent-text)}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:26px;padding:0;list-style:none}
+.tags li{font-family:var(--mono);font-size:12px;padding:3px 10px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+.hero{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:28px;align-items:end}
+.lede{font-size:clamp(20px,2.2vw,24px);line-height:1.35;font-weight:600;letter-spacing:-.01em;max-width:30ch;margin:0 0 24px;text-wrap:balance}
+.acts{display:flex;gap:10px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:11px 18px;border-radius:8px;background:var(--accent);color:var(--accent-ink);text-decoration:none;font-weight:600;font-size:14px;border:0;cursor:pointer;white-space:nowrap;transition:transform .15s,filter .15s}
+.btn:hover{filter:brightness(1.07);text-decoration:none}
+.btn:active{transform:translateY(1px)}
+.btn.sec{background:var(--panel2);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+.portrait-sm{display:none;width:96px;height:96px;border-radius:12px;object-fit:cover}
+
+section{scroll-margin-top:24px}
+[tabindex="-1"]:focus{outline:none}
+h2{font-size:22px;font-weight:800;letter-spacing:-.02em;margin:56px 0 16px;text-wrap:balance}
+.kv{display:grid;grid-template-columns:190px minmax(0,1fr);border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--panel);margin:0}
+.kv dt,.kv dd{margin:0;padding:12px 16px}
+.kv dt{color:var(--muted)}
+.kv dd{overflow-wrap:anywhere}
+.kv > :nth-child(n+3){border-top:1px solid var(--line)}
+.code{font-family:var(--mono);font-size:13px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px;overflow-x:auto;white-space:pre;color:var(--muted);margin:0}
+.code .k{color:var(--ok-text)}.code .s{color:var(--accent-text)}
+
+.eval{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.metric{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:4px}
+.metric .v{font-family:var(--mono);font-size:32px;line-height:1.1;font-variant-numeric:tabular-nums;color:var(--ink)}
+.metric .v small{font-size:16px;color:var(--accent-text)}
+.metric .k{font-weight:600}
+.metric .n{font-size:13px;color:var(--muted)}
+.metric.zero .v{color:var(--ok-text)}
+
+.build{border:1px solid var(--line);border-radius:12px;background:var(--panel);padding:20px 22px 22px;margin-bottom:14px;display:flex;flex-direction:column;gap:12px}
+.build .bh{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.build h3{margin:0;font-family:var(--mono);font-weight:500;font-size:18px}
+.build > p{margin:0;color:var(--muted);max-width:62ch}
+.build .kv{background:var(--bg)}
+.gwt{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:4px;font-family:var(--mono);font-size:13px}
+.gwt b{color:var(--accent-text);font-weight:500}
+.status.ok{color:var(--ok-text)}
+.uc{border-radius:12px;overflow:hidden;border:1px solid var(--line);background:var(--panel)}
+.uc .tape{height:14px;background:repeating-linear-gradient(-45deg,var(--uc) 0 14px,var(--bg) 14px 28px)}
+.uc .in{padding:22px 22px 24px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:20px;align-items:end}
+.uc h3{margin:0 0 6px;font-size:20px;letter-spacing:-.02em}
+.uc p{margin:0 0 14px;color:var(--muted);max-width:56ch}
+.uc ol{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px;font-family:var(--mono);font-size:13px}
+.uc ol b{color:var(--accent-text);font-weight:500}
+.status{font-family:var(--mono);font-size:12px;color:var(--warn);border:1px solid currentColor;border-radius:999px;padding:3px 10px;white-space:nowrap}
+
+.log{list-style:none;margin:0;padding:0;border-left:1px solid var(--line);margin-left:8px}
+.log li{position:relative;padding:0 0 22px 24px}
+.log li::before{content:"";position:absolute;left:-5px;top:7px;width:9px;height:9px;border-radius:50%;background:var(--panel2);box-shadow:0 0 0 1px var(--line)}
+.log li.now::before{background:var(--accent);box-shadow:none}
+.log .ver{font-family:var(--mono);font-size:13px;color:var(--accent-text)}
+.log b{display:block;font-size:16px}
+.log span{color:var(--muted);font-size:14px}
+
+.lim{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.lim li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:baseline;padding:12px 16px;border:1px solid var(--line);border-radius:10px;background:var(--panel)}
+.lim li::before{content:"!";font-family:var(--mono);font-weight:500;color:var(--accent-ink);background:var(--accent);width:18px;height:18px;border-radius:50%;display:inline-grid;place-items:center;font-size:12px;line-height:1}
+
+.contact{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:16px}
+form{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:14px}
+.f{display:flex;flex-direction:column;gap:6px}
+.f label{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.f input,.f textarea{font:inherit;font-size:15px;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:8px;padding:10px 12px;transition:border-color .15s,box-shadow .15s}
+.f input:focus-visible,.f textarea:focus-visible{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 30%,transparent)}
+.f textarea{min-height:110px;resize:vertical}
+.err{font-size:13px;color:#FF7A7A;min-height:0}
+:root[data-theme="light"] .err{color:#B42318}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .err{color:#B42318}}
+.note{font-size:14px;color:var(--muted);margin:0}
+.sent{display:flex;flex-direction:column;gap:10px;border-top:1px dashed var(--line);padding-top:14px}
+.reach{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:16px}
+.reach .row{display:flex;flex-direction:column;gap:4px}
+.reach .lbl{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.reach .val{font-size:16px;font-weight:600;user-select:all;overflow-wrap:anywhere}
+.reach .copy{align-self:flex-start;font-family:var(--mono);font-size:12px;background:none;color:var(--ink);border:1px solid var(--line);border-radius:999px;padding:4px 12px;cursor:pointer;transition:transform .12s cubic-bezier(.23,1,.32,1),border-color .15s ease}
+.reach .copy:hover{border-color:var(--accent)}
+.reach .copy:active{transform:scale(.96)}
+
+.rail{border-left:1px solid var(--line);padding:28px 18px}
+.card{position:sticky;top:24px;border:1px solid var(--line);border-radius:12px;background:var(--panel);overflow:hidden;box-shadow:var(--shadow)}
+.card img{display:block;width:100%;aspect-ratio:1;object-fit:cover;object-position:50% 25%}
+.card .body{padding:16px;display:flex;flex-direction:column;gap:10px}
+.card .k{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.card .st{font-weight:600}
+.card .st::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ok);margin-right:8px;vertical-align:1px}
+
+.theme{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:999px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer;font-size:13px;font-weight:600;transition:border-color .15s}
+.theme:hover{border-color:var(--accent)}
+.theme svg{width:16px;height:16px}
+footer{margin-top:64px;padding-top:20px;border-top:1px solid var(--line);font-size:13px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+
+@media (max-width:1180px){.shell{grid-template-columns:220px minmax(0,1fr)}.rail{display:none}.portrait-sm{display:block}}
+@media (max-width:860px){
+  .shell{grid-template-columns:minmax(0,1fr)}
+  .side{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line);padding:16px}
+  .side .toc{flex-direction:row;flex-wrap:wrap}
+  .side .grp,.side .links{display:none}
+  .crumbs{margin:0 0 10px 4px}
+  main{padding:28px 16px 72px}
+  .hero{grid-template-columns:minmax(0,1fr)}
+  .portrait-sm{order:-1}
+  .kv{grid-template-columns:minmax(0,1fr)}
+  .kv dt{padding-bottom:0;border-top:1px solid var(--line)}
+  .kv dt:first-child{border-top:0}
+  .kv dd{border-top:0!important}
+  .eval,.contact{grid-template-columns:minmax(0,1fr)}
+  .uc .in{grid-template-columns:minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to Content</a>
+<div class="shell">
+  <nav class="side" aria-label="Sections">
+    <div class="crumbs"><b>cards</b> / people</div>
+    <ul class="toc" id="toc">
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#use">Intended Use</a></li>
+      <li><a href="#eval">Evaluation</a></li>
+      <li><a href="#builds">Builds</a></li>
+      <li><a href="#changelog">Changelog</a></li>
+      <li><a href="#limits">Limitations</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <div class="grp">Elsewhere</div>
+    <div class="links">
+      <a href="https://www.linkedin.com/in/sudhansh-arora/" target="_blank" rel="noopener">LinkedIn ↗</a>
+      <a href="https://github.com/Sudhansh3110" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </nav>
+
+  <main id="main">
+    <div class="topline">
+      <span class="path" translate="no">cards / people / sudhansh-arora</span>
+      <button class="theme" type="button" id="theme" aria-label="Switch Light or Dark Theme">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="8" cy="8" r="5.5"/><path d="M8 2.5a5.5 5.5 0 010 11z" fill="currentColor"/></svg>
+        <span id="themelbl">Light</span>
+      </button>
+    </div>
+
+    <div class="hero" id="overview-top">
+      <div>
+        <h1 translate="no">sudhansh-arora <span>v2.0</span></h1>
+        <ul class="tags" aria-label="Tags"><li>ai-governance</li><li>ai-qa</li><li>fairness</li><li>en, hi</li><li>license: hire-me</li></ul>
+        <p class="lede">A human model, fine-tuned on five years of QA, for keeping AI accurate, fair and accountable.</p>
+        <div class="acts"><a class="btn" href="#contact">Get in Touch</a><a class="btn sec" href="#eval">Read the Evaluation</a></div>
+      </div>
+      <img class="portrait-sm" src="../assets/sudhansh-arora.jpg" alt="Sudhansh Arora" width="96" height="96">
+    </div>
+
+    <section id="overview">
+      <h2>Overview</h2>
+      <dl class="kv">
+        <dt>Base model</dt><dd>QA Lead, Xebia (Mar 2024)</dd>
+        <dt>Fine-tuned as</dt><dd>Business Analyst, then AI QA and Governance</dd>
+        <dt>Current role</dt><dd>Senior Consultant, Xebia</dd>
+        <dt>Certifications</dt><dd>Claude Certified Associate (CCAO-F), Certified Scrum Master (CSM), Professional Certificate in AI &amp; ML from IIT Kanpur</dd>
+        <dt>Region</dt><dd>Jaipur, India. Open to travel for client-facing roles.</dd>
+      </dl>
+    </section>
+
+    <section id="use">
+      <h2>Intended Use</h2>
+<pre class="code" translate="no"><span class="k">from</span> hiring <span class="k">import</span> team
+team.add(<span class="s">"sudhansh-arora"</span>, role=<span class="s">"AI Governance Analyst"</span>)
+# good at: risk reviews, bias audits, EU AI Act mapping,
+# acceptance criteria for AI features, audit trails people can read</pre>
+    </section>
+
+    <section id="eval">
+      <h2>Evaluation</h2>
+      <div class="eval">
+        <div class="metric"><span class="v">5<small>+ yrs</small></span><span class="k">Testing software</span><span class="n">Decurtis, Kalagato and Xebia, including GPT API integrations.</span></div>
+        <div class="metric"><span class="v">2</span><span class="k">AI credentials</span><span class="n">Claude Certified Associate and an AI &amp; ML certificate from IIT Kanpur.</span></div>
+        <div class="metric"><span class="v">1</span><span class="k">Build shipped</span><span class="n">Portfolio Sites. More Version 2.0 builds in progress.</span></div>
+        <div class="metric zero"><span class="v">0</span><span class="k">Hallucinations in this CV</span><span class="n">Every claim above can be checked on LinkedIn.</span></div>
+      </div>
+    </section>
+
+    <section id="builds">
+      <h2>Builds</h2>
+      <article class="build">
+        <div class="bh"><h3 translate="no">portfolio-sites</h3><span class="status ok">Shipped</span></div>
+        <p>Three role-specific portfolio sites: this model card for AI Governance, a Windows-style desktop for AI QA and a whiteboard for Business Analysis.</p>
+        <dl class="kv">
+          <dt>User story</dt><dd>As a hiring manager, I want a portfolio built for the role I’m hiring for, so that I can judge fit in minutes, not after a call.</dd>
+          <dt>Acceptance criteria</dt><dd><ol class="gwt"><li><b>Given</b> a recruiter opens the link for one role</li><li><b>When</b> the page loads</li><li><b>Then</b> the CV and contact details are one click away</li><li><b>And</b> it works on a phone, in both themes and with a keyboard</li></ol></dd>
+          <dt>Governance checks</dt><dd>Every claim on each site can be checked on LinkedIn. Accessibility reviewed against the Web Interface Guidelines. No tracking.</dd>
+          <dt>Built with</dt><dd>HTML, CSS, JavaScript, Claude, Playwright, GitHub</dd>
+        </dl>
+      </article>
+      <div class="uc">
+        <div class="tape" aria-hidden="true"></div>
+        <div class="in">
+          <div>
+            <h3>More builds under construction</h3>
+            <p>The next Version 2.0 governance projects are being built now. Each one ships here with its user story and acceptance criteria.</p>
+            <ol><li><b>Given</b> the builds are in progress</li><li><b>When</b> each one is tested and shipped</li><li><b>Then</b> it gets its own section on this card</li></ol>
+          </div>
+          <div class="acts"><span class="status">In progress</span><a class="btn sec" href="https://github.com/Sudhansh3110" target="_blank" rel="noopener">Follow on GitHub</a></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="changelog">
+      <h2>Changelog</h2>
+      <ol class="log">
+        <li class="now"><span class="ver">v2.1 · in progress</span><b>AI QA and Governance</b><span>Shipped Portfolio Sites. Building the next Version 2.0 projects: evaluation methods, fairness checks, audit trails.</span></li>
+        <li><span class="ver">v2.0 · Sep 2024</span><b>Business Analyst, Xebia</b><span>Moved into business analysis after working directly with client teams.</span></li>
+        <li><span class="ver">v1.5 · Mar 2024</span><b>QA Lead, Xebia</b><span>Led testing on Power Platform and Appian implementations.</span></li>
+        <li><span class="ver">v1.0</span><b>QA, Kalagato and Decurtis</b><span>Mobile apps and GPT API integration.</span></li>
+      </ol>
+    </section>
+
+    <section id="limits">
+      <h2>Known Limitations</h2>
+      <ul class="lim">
+        <li>Will ask where the training data came from. Every time.</li>
+        <li>Does not approve models on vibes, demos or “it worked yesterday”.</li>
+        <li>Performance drops without coffee. Refill recommended every 3 hours.</li>
+      </ul>
+    </section>
+
+    <section id="contact">
+      <h2>Contact</h2>
+      <div class="contact">
+        <form id="form" novalidate>
+          <div class="f"><label for="c-name">Your name</label><input id="c-name" name="name" autocomplete="name" placeholder="e.g. Priya Sharma…"></div>
+          <div class="f"><label for="c-email">Email</label><input id="c-email" name="email" type="email" autocomplete="email" spellcheck="false" placeholder="e.g. priya@company.com…" aria-describedby="e-email"><span class="err" id="e-email" aria-live="polite"></span></div>
+          <div class="f"><label for="c-msg">What are you governing?</label><textarea id="c-msg" name="message" autocomplete="off" placeholder="e.g. An AI assistant that needs a risk review before launch…" aria-describedby="e-msg"></textarea><span class="err" id="e-msg" aria-live="polite"></span></div>
+          <div><button class="btn" type="submit">Prepare Email</button></div>
+          <div class="sent" id="sent" hidden>
+            <p class="note">Ready. This page can’t send mail by itself, so open it in your email app or copy the address.</p>
+            <div class="acts"><a class="btn" id="mailto" href="mailto:arorasudhansh31@gmail.com">Open in Email App</a></div>
+          </div>
+        </form>
+        <div class="reach">
+          <div class="row"><span class="lbl">Email</span><span class="val" id="addr">arorasudhansh31@gmail.com</span><button class="copy" type="button" id="copy">Copy Email</button></div>
+          <div class="row"><span class="lbl">LinkedIn</span><a class="val" href="https://www.linkedin.com/in/sudhansh-arora/" target="_blank" rel="noopener">in/sudhansh-arora</a></div>
+          <div class="row"><span class="lbl">GitHub</span><a class="val" href="https://github.com/Sudhansh3110" target="_blank" rel="noopener">Sudhansh3110</a></div>
+        </div>
+      </div>
+    </section>
+
+    <footer><span>© 2026 Sudhansh Arora</span><span>Model card format, human contents</span></footer>
+  </main>
+
+  <aside class="rail" aria-label="Status">
+    <div class="card">
+      <img src="../assets/sudhansh-arora.jpg" alt="Sudhansh Arora" width="224" height="224">
+      <div class="body">
+        <span class="k">Deployment status</span>
+        <span class="st">Open to AI governance roles</span>
+        <a class="btn" href="#contact">Get in Touch</a>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<script>
+(function(){
+  var root = document.documentElement;
+  /* theme toggle */
+  function isDark(){ var t = root.getAttribute('data-theme'); return t ? t === 'dark' : !matchMedia('(prefers-color-scheme: light)').matches; }
+  function syncLbl(){ document.getElementById('themelbl').textContent = isDark() ? 'Light' : 'Dark'; }
+  try { var saved = localStorage.getItem('sa-theme'); if (saved) root.setAttribute('data-theme', saved); } catch(e){}
+  syncLbl();
+  document.getElementById('theme').addEventListener('click', function(){
+    var next = isDark() ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('sa-theme', next); } catch(e){}
+    syncLbl();
+  });
+
+  /* in-page links scroll inside the page instead of navigating the host window */
+  var reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.addEventListener('click', function(e){
+    var a = e.target.closest('a[href^="#"]');
+    if (!a) return;
+    var id = a.getAttribute('href').slice(1);
+    var target = id && document.getElementById(id);
+    e.preventDefault();
+    if (!target) return;
+    target.scrollIntoView({behavior: reduceMotion ? 'auto' : 'smooth', block: 'start'});
+    if (!target.hasAttribute('tabindex')) target.setAttribute('tabindex', '-1');
+    target.focus({preventScroll: true});
+  });
+
+  /* table of contents follows the section in view */
+  var links = Array.prototype.slice.call(document.querySelectorAll('#toc a'));
+  var map = {}; links.forEach(function(a){ map[a.getAttribute('href').slice(1)] = a; });
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting){ links.forEach(function(a){ a.removeAttribute('aria-current'); }); var a = map[en.target.id]; if (a) a.setAttribute('aria-current','true'); }
+      });
+    }, {rootMargin:'-20% 0px -70% 0px'});
+    Object.keys(map).forEach(function(id){ var s = document.getElementById(id); if (s) io.observe(s); });
+  }
+  if (links[0]) links[0].setAttribute('aria-current','true');
+
+  /* contact form */
+  var ADDR = 'arorasudhansh31@gmail.com';
+  document.getElementById('form').addEventListener('submit', function(e){
+    e.preventDefault();
+    var em = document.getElementById('c-email'), msg = document.getElementById('c-msg');
+    var eEm = document.getElementById('e-email'), eMsg = document.getElementById('e-msg');
+    eEm.textContent = ''; eMsg.textContent = '';
+    var bad = null;
+    if (!/^\S+@\S+\.\S+$/.test(em.value.trim())){ eEm.textContent = 'Enter a valid email so he can reply, e.g. priya@company.com.'; bad = bad || em; }
+    if (!msg.value.trim()){ eMsg.textContent = 'Add a line about the project so he knows where to start.'; bad = bad || msg; }
+    if (bad){ bad.focus(); return; }
+    var name = document.getElementById('c-name').value.trim();
+    var body = msg.value.trim() + '\n\n- ' + (name ? name + ', ' : '') + em.value.trim();
+    document.getElementById('mailto').href = 'mailto:' + ADDR + '?subject=' + encodeURIComponent('AI governance role') + '&body=' + encodeURIComponent(body);
+    document.getElementById('sent').hidden = false;
+  });
+
+  /* copy email */
+  var copy = document.getElementById('copy');
+  copy.addEventListener('click', function(){
+    function sel(){ var r = document.createRange(); r.selectNodeContents(document.getElementById('addr')); var s = getSelection(); s.removeAllRanges(); s.addRange(r); copy.textContent = 'Selected, press Ctrl+C'; }
+    try { navigator.clipboard.writeText(ADDR).then(function(){ copy.textContent = 'Copied'; setTimeout(function(){ copy.textContent = 'Copy Email'; }, 1600); }, sel); } catch(err){ sel(); }
+  });
+})();
+</script>
+</body>
+</html>

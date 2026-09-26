@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Sudhansh Arora, business analyst portfolio as a collaborative whiteboard.">
+<meta name="theme-color" content="#F7F8FA">
+<meta property="og:title" content="Sudhansh Arora Requirements Board | Business Analyst">
+<meta property="og:description" content="Sudhansh Arora, business analyst portfolio as a collaborative whiteboard.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="../assets/sudhansh-arora.jpg">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<title>Sudhansh Requirements Board</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700&family=Caveat:wght@500;700&display=swap">
+<style>
+/* Design read: business analyst portfolio for hiring managers, as a collaborative whiteboard.
+   Playful canvas language, one yellow accent, pastel stickies. Dials: variance 8, motion 5, density 3. */
+:root{
+  --canvas:#F7F8FA; --dots:#D3D6DE; --frame:#FFFFFF; --ink:#1C1C1E; --slate:#4F5463; --muted:#6B6F7E; --line:#E0E2E8;
+  --bar:#FFFFFF; --accent:#FFD02F; --accent-ink:#1C1C1E; --arrow:#6B6F7E; --focus:#1C1C1E;
+  --shadow:0 4px 16px rgba(5,0,56,.08); --stk-shadow:0 1px 0 rgba(0,0,0,.04),0 10px 18px -10px rgba(0,0,0,.35);
+  --y:#FFF4C4; --yy:#FFD02F; --coral:#FFC6C6; --teal:#C3FAF5; --rose:#FFD8F4; --orange:#FFE6CD; --mint:#D6F5DD;
+  --sans:"Figtree","Helvetica Neue",Arial,sans-serif; --hand:"Caveat","Segoe Print","Comic Sans MS",cursive;
+  --tb:60px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --canvas:#16171D; --dots:#2E3039; --frame:#1F2028; --ink:#ECECF1; --slate:#BEC1CE; --muted:#9A9DAD; --line:#32343F;
+    --bar:#1B1C23; --arrow:#9A9DAD; --focus:#FFD02F;
+    --shadow:0 4px 16px rgba(0,0,0,.4); --stk-shadow:0 1px 0 rgba(0,0,0,.2),0 12px 20px -10px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --canvas:#16171D; --dots:#2E3039; --frame:#1F2028; --ink:#ECECF1; --slate:#BEC1CE; --muted:#9A9DAD; --line:#32343F;
+  --bar:#1B1C23; --arrow:#9A9DAD; --focus:#FFD02F;
+  --shadow:0 4px 16px rgba(0,0,0,.4); --stk-shadow:0 1px 0 rgba(0,0,0,.2),0 12px 20px -10px rgba(0,0,0,.7);
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+img{max-width:100%}
+html,body{height:100%}
+body{margin:0;font-family:var(--sans);color:var(--ink);background:var(--canvas);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow:hidden}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:6px}
+button{font:inherit;color:inherit;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+
+/* top bar */
+.top{position:relative;z-index:30;height:var(--tb);display:flex;align-items:center;gap:12px;padding:0 16px;background:var(--bar);border-bottom:1px solid var(--line)}
+.me{width:34px;height:34px;border-radius:50%;object-fit:cover;flex:0 0 auto}
+.bname{min-width:0;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bname small{display:block;color:var(--muted);font-size:12px;font-weight:400}
+.sp{flex:1}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;border-radius:999px;background:var(--ink);color:var(--canvas);font-weight:500;font-size:14px;text-decoration:none;border:0;cursor:pointer;white-space:nowrap;transition:transform .15s,background-color .15s}
+.pill:active{transform:translateY(1px)}
+.pill.y{background:var(--accent);color:var(--accent-ink)}
+.pill.y:hover{background:#FCB900}
+.pill.o{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line)}
+.pill.o:hover{box-shadow:inset 0 0 0 1px var(--muted)}
+.theme svg{width:16px;height:16px}
+
+/* board */
+.board{position:relative;height:calc(100% - var(--tb));overflow:hidden;cursor:grab;touch-action:none;background-color:var(--canvas);background-image:radial-gradient(var(--dots) 1.2px,transparent 1.2px);background-size:24px 24px}
+.board.dragging{cursor:grabbing;user-select:none}
+.world{position:absolute;left:0;top:0;width:2300px;height:1560px;transform-origin:0 0;will-change:transform}
+.world.glide{transition:transform .6s cubic-bezier(.16,1,.3,1)}
+.abs{position:absolute}
+
+.hero{max-width:760px}
+.kick{display:inline-block;font-family:var(--hand);font-size:30px;font-weight:700;color:var(--slate);transform:rotate(-2deg);margin-bottom:4px}
+.hero h1{font-size:76px;line-height:1.04;letter-spacing:-2px;font-weight:700;margin:0 0 18px;text-wrap:balance}
+.hero h1 mark{background:linear-gradient(transparent 60%,var(--accent) 60%);color:inherit;padding:0 .06em}
+.hero p{font-size:19px;color:var(--slate);max-width:44ch;margin:0 0 24px}
+.acts{display:flex;gap:10px;flex-wrap:wrap}
+
+.frame{background:var(--frame);border-radius:4px;box-shadow:0 0 0 1px var(--line)}
+.frame > .ft{position:absolute;top:-28px;left:0;font-size:14px;color:var(--slate);font-weight:500;white-space:nowrap}
+.inner{position:relative;width:100%;height:100%}
+.stk{position:absolute;width:156px;min-height:150px;padding:14px;color:#1C1C1E;font-family:var(--hand);font-size:25px;line-height:1.1;box-shadow:var(--stk-shadow);transform:rotate(var(--r,0deg));transition:transform .2s cubic-bezier(.16,1,.3,1)}
+.stk:hover{transform:rotate(0deg) translateY(-3px)}
+.stk small{display:block;font-family:var(--sans);font-size:12px;color:rgba(28,28,30,.62);margin-top:10px;line-height:1.3}
+.stk.wide{width:230px;min-height:120px}
+.chip{position:absolute;padding:10px 16px;border-radius:10px;font-weight:500;font-size:15px;color:#1C1C1E;box-shadow:var(--stk-shadow);transform:rotate(var(--r,0deg));white-space:nowrap}
+
+.polaroid{position:absolute;background:#FFFFFF;padding:12px 12px 44px;box-shadow:var(--stk-shadow);transform:rotate(-3deg);width:230px}
+.polaroid img{display:block;width:206px;height:206px;object-fit:cover}
+.polaroid span{position:absolute;left:0;right:0;bottom:8px;text-align:center;font-family:var(--hand);font-size:26px;color:#1C1C1E}
+.tape{height:16px;border-radius:2px;background:repeating-linear-gradient(-45deg,#F5B400 0 16px,#1C1C1E 16px 32px)}
+.uc-note{font-family:var(--sans);font-size:14px;color:var(--slate);line-height:1.5}
+
+.formstk{position:absolute;background:var(--y);color:#1C1C1E;padding:18px;box-shadow:var(--stk-shadow);width:520px;display:flex;flex-direction:column;gap:12px;transform:rotate(-.6deg)}
+.formstk h3{margin:0;font-family:var(--hand);font-size:32px;line-height:1}
+.f{display:flex;flex-direction:column;gap:4px}
+.f label{font-size:13px;font-weight:500;color:#3D4050}
+.f input,.f textarea{font:inherit;font-size:15px;color:#1C1C1E;background:rgba(255,255,255,.7);border:1px solid rgba(28,28,30,.2);border-radius:6px;padding:9px 11px}
+.f input:focus-visible,.f textarea:focus-visible{outline:2px solid #1C1C1E;outline-offset:1px}
+.f textarea{min-height:84px;resize:vertical}
+.err{font-size:13px;color:#A30D0D}
+.formstk .note{font-size:14px;margin:0}
+.formstk .pill{background:#1C1C1E;color:#FFFFFF}
+.linkstk{position:absolute;width:210px;min-height:118px;padding:14px;color:#1C1C1E;box-shadow:var(--stk-shadow);transform:rotate(var(--r,0deg));display:flex;flex-direction:column;gap:6px;text-decoration:none;transition:transform .2s cubic-bezier(.16,1,.3,1)}
+a.linkstk:hover{transform:rotate(0deg) translateY(-3px)}
+.linkstk b{font-family:var(--hand);font-size:28px;line-height:1}
+.linkstk span{font-size:13px;overflow-wrap:anywhere}
+.linkstk button{align-self:flex-start;margin-top:auto;font-size:12px;font-weight:500;background:#1C1C1E;color:#FFFFFF;border:0;border-radius:999px;padding:4px 12px;cursor:pointer}
+
+svg.links{position:absolute;left:0;top:0;width:2300px;height:1560px;pointer-events:none;overflow:visible}
+svg.links path{fill:none;stroke:var(--arrow);stroke-width:2;stroke-dasharray:600;stroke-dashoffset:600;animation:draw 1.2s .4s cubic-bezier(.16,1,.3,1) forwards}
+svg.links path.b{animation-delay:.9s}
+svg.links marker path{stroke:none;fill:var(--arrow);animation:none;stroke-dasharray:none;stroke-dashoffset:0}
+@keyframes draw{to{stroke-dashoffset:0}}
+
+.cursor{position:absolute;display:flex;align-items:flex-start;gap:2px;pointer-events:none;animation:drift 9s ease-in-out infinite alternate}
+.cursor.b{animation-duration:11s;animation-delay:-3s}
+.cursor span{background:var(--c);color:#FFFFFF;font-size:12px;font-weight:500;padding:3px 8px;border-radius:0 8px 8px 8px;margin-top:14px;white-space:nowrap}
+@keyframes drift{0%{transform:translate(0,0)}50%{transform:translate(60px,24px)}100%{transform:translate(-30px,48px)}}
+
+/* HUD */
+.hud{position:absolute;z-index:20;background:var(--bar);border-radius:12px;box-shadow:var(--shadow);display:flex;align-items:center;gap:2px;padding:4px}
+.jump{left:50%;bottom:16px;transform:translateX(-50%)}
+.jump button,.zoom button{border:0;background:none;border-radius:8px;cursor:pointer;padding:8px 12px;font-size:14px;font-weight:500;color:var(--ink);transition:background-color .15s,transform .12s cubic-bezier(.16,1,.3,1)}
+.jump button:hover,.zoom button:hover{background:color-mix(in srgb,var(--accent) 30%,transparent)}
+.jump button:active,.zoom button:active{transform:scale(.94)}
+.jump button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.zoom{right:16px;bottom:16px;font-size:13px;font-variant-numeric:tabular-nums}
+.zoom button{padding:6px 10px;font-size:16px;line-height:1}
+.zoom span{min-width:46px;text-align:center}
+.hint{left:16px;bottom:16px;padding:8px 12px;font-size:13px;color:var(--muted)}
+
+/* phones: the board becomes a scrolling page */
+@media (max-width:900px){
+  body{overflow:auto;height:auto}
+  html{height:auto}
+  .top{position:sticky;top:env(safe-area-inset-top,0px)}
+  .top .bname small,.top .o{display:none}
+  .board{height:auto;overflow:visible;cursor:auto;touch-action:auto;padding:24px 16px 40px}
+  .world{position:static;width:auto;height:auto;transform:none!important;display:flex;flex-direction:column;gap:56px}
+  .abs{position:relative!important;left:auto!important;top:auto!important;width:auto!important;height:auto!important}
+  .hero h1{font-size:44px;letter-spacing:-1px}
+  .frame{padding:20px 14px}
+  .frame > .ft{top:-26px}
+  .inner{display:flex;flex-wrap:wrap;gap:14px;height:auto}
+  .inner > *{position:relative!important;left:auto!important;top:auto!important}
+  .stk,.linkstk{width:calc(50% - 7px)!important;min-height:120px}
+  .stk.wide,.formstk,.polaroid,.uc-wrap{width:100%!important}
+  .polaroid{max-width:260px}
+  svg.links,.cursor,.hud{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .cursor{animation:none}
+  svg.links path{animation:none;stroke-dashoffset:0}
+  .world.glide{transition:none}
+  *{transition:none!important}
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <img class="me" src="../assets/sudhansh-arora.jpg" alt="Sudhansh Arora" width="34" height="34">
+  <span class="bname">Sudhansh Arora, Requirements Board<small>Business Analyst · open to roles</small></span>
+  <span class="sp"></span>
+  <button class="pill o theme" type="button" id="theme" aria-label="Switch Light or Dark Theme"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><circle cx="8" cy="8" r="5.5"/><path d="M8 2.5a5.5 5.5 0 010 11z" fill="currentColor"/></svg><span id="themelbl">Dark</span></button>
+  <button class="pill" type="button" data-go="contact">Get in Touch</button>
+</header>
+
+<main class="board" id="board" tabindex="0" aria-label="Whiteboard. Drag or use arrow keys to move, plus and minus to zoom.">
+  <div class="world" id="world">
+
+    <svg class="links" aria-hidden="true" viewBox="0 0 2300 1560">
+      <defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z"/></marker></defs>
+      <path d="M520 790 C 580 790, 590 790, 632 790" marker-end="url(#ah)"/>
+      <path class="b" d="M1000 790 C 1060 790, 1070 790, 1112 790" marker-end="url(#ah)"/>
+    </svg>
+
+    <section class="abs hero" id="f-start" style="left:120px;top:70px">
+      <span class="kick">hi, I’m Sudhansh</span>
+      <h1>I turn messy meetings into <mark>clear requirements.</mark></h1>
+      <p>Business analyst and former QA lead. I make sure the client and the build team mean the same thing by “done”.</p>
+      <div class="acts"><button class="pill y" type="button" data-go="cv">View CV</button><button class="pill o" type="button" data-go="contact">Get in Touch</button></div>
+    </section>
+
+    <section class="abs frame" id="f-problem" style="left:120px;top:600px;width:400px;height:380px" aria-label="Problem">
+      <span class="ft">1. Problem</span>
+      <div class="inner">
+        <div class="stk" style="left:20px;top:26px;background:var(--y);--r:-2deg">Nobody agrees what “done” means<small>Client workshop</small></div>
+        <div class="stk" style="left:204px;top:44px;background:var(--y);--r:2deg">Requirements live in 14 chats<small>Stakeholder interview</small></div>
+        <div class="stk" style="left:104px;top:196px;background:var(--coral);--r:-1deg">AI answers change after every fix<small>QA log</small></div>
+      </div>
+    </section>
+
+    <section class="abs frame" id="f-discovery" style="left:640px;top:600px;width:360px;height:380px" aria-label="Discovery">
+      <span class="ft">2. Discovery</span>
+      <div class="inner">
+        <div class="stk" style="left:20px;top:26px;background:var(--teal);--r:1.5deg">Map who needs what<small>Stakeholder map</small></div>
+        <div class="stk" style="left:184px;top:54px;background:var(--rose);--r:-2deg">Write it as a user story<small>Given, When, Then</small></div>
+        <div class="stk" style="left:98px;top:200px;background:var(--orange);--r:1deg">Agree on the test first<small>Acceptance criteria</small></div>
+      </div>
+    </section>
+
+    <section class="abs frame" id="f-delivered" style="left:1120px;top:600px;width:380px;height:380px" aria-label="Delivered">
+      <span class="ft">3. Delivered</span>
+      <div class="inner">
+        <div class="stk wide" style="left:22px;top:24px;width:336px;min-height:150px;background:var(--yy);--r:-1deg">Portfolio Sites ✓<small>Shipped. Three sites, one per role, and this board is one of them. Story: a hiring manager can judge fit in minutes, with the CV one click away.</small></div>
+        <div class="stk" style="left:22px;top:206px;width:196px;min-height:140px;background:var(--y);--r:1.5deg;padding:0"><div class="tape" aria-hidden="true"></div><div style="padding:12px 14px">More builds under construction<small>Next Version 2.0 projects</small></div></div>
+        <div class="stk" style="left:232px;top:214px;width:128px;min-height:130px;background:var(--mint);--r:-2deg">Tested before shipped<small>Old QA habit</small></div>
+      </div>
+    </section>
+
+    <section class="abs frame" id="f-cv" style="left:1620px;top:70px;width:600px;height:1010px" aria-label="CV">
+      <span class="ft">CV</span>
+      <div class="inner">
+        <figure class="polaroid" style="left:30px;top:30px;margin:0"><img src="../assets/sudhansh-arora.jpg" alt="Sudhansh Arora" width="206" height="206"><span>Sudhansh Arora</span></figure>
+        <div class="stk wide" style="left:300px;top:40px;width:260px;background:var(--y);--r:1.5deg">Senior Consultant, Xebia<small>Jaipur, India. Open to travel for client-facing roles.</small></div>
+        <div class="stk wide" style="left:300px;top:200px;width:260px;background:var(--teal);--r:-1deg">Business Analyst<small>Xebia · Sep 2024 to now. Moved over after working directly with client teams.</small></div>
+        <div class="stk wide" style="left:40px;top:360px;width:250px;background:var(--rose);--r:1deg">QA Lead<small>Xebia · from Mar 2024. Power Platform and Appian.</small></div>
+        <div class="stk wide" style="left:310px;top:390px;width:250px;background:var(--orange);--r:-2deg">QA, Kalagato<small>Testing across a suite of consumer mobile apps.</small></div>
+        <div class="stk wide" style="left:40px;top:540px;width:250px;background:var(--mint);--r:-1deg">QA, Decurtis<small>Where the testing habit started.</small></div>
+        <div class="stk wide" style="left:310px;top:570px;width:250px;background:var(--y);--r:1.5deg">5+ years in QA<small>Now pointed at AI quality and governance.</small></div>
+        <div class="stk wide" style="left:40px;top:700px;width:250px;background:var(--yy);--r:1deg">Claude Certified Associate<small>CCAO-F</small></div>
+        <div class="stk wide" style="left:310px;top:700px;width:250px;background:var(--teal);--r:-1.5deg">Certified Scrum Master<small>CSM, Scrum Alliance</small></div>
+        <div class="stk wide" style="left:40px;top:850px;width:250px;background:var(--mint);--r:-1deg">AI &amp; ML certificate<small>Professional Certificate, IIT Kanpur</small></div>
+      </div>
+    </section>
+
+    <section class="abs frame" id="f-skills" style="left:120px;top:1100px;width:880px;height:360px" aria-label="Skills">
+      <span class="ft">Skills</span>
+      <div class="inner">
+        <span class="chip" style="left:30px;top:34px;background:var(--y);--r:-2deg">Requirements workshops</span>
+        <span class="chip" style="left:300px;top:28px;background:var(--rose);--r:1deg">User stories &amp; acceptance criteria</span>
+        <span class="chip" style="left:640px;top:44px;background:var(--teal);--r:-1deg">UAT planning</span>
+        <span class="chip" style="left:60px;top:124px;background:var(--orange);--r:1deg">As-is and to-be process maps</span>
+        <span class="chip" style="left:380px;top:132px;background:var(--mint);--r:-2deg">Stakeholder management</span>
+        <span class="chip" style="left:650px;top:128px;background:var(--y);--r:2deg">Test strategy</span>
+        <span class="chip" style="left:40px;top:222px;background:var(--teal);--r:-1deg">Microsoft Power Platform</span>
+        <span class="chip" style="left:320px;top:230px;background:var(--coral);--r:1deg">Appian</span>
+        <span class="chip" style="left:460px;top:218px;background:var(--rose);--r:-1.5deg">AI features and GPT APIs</span>
+      </div>
+    </section>
+
+    <section class="abs frame" id="f-contact" style="left:1120px;top:1100px;width:1100px;height:420px" aria-label="Contact">
+      <span class="ft">Contact</span>
+      <div class="inner">
+        <form class="formstk" id="form" novalidate style="left:30px;top:30px">
+          <h3>Add a sticky for Sudhansh</h3>
+          <div class="f"><label for="c-email">Your email</label><input id="c-email" name="email" type="email" autocomplete="email" spellcheck="false" placeholder="e.g. priya@company.com…" aria-describedby="e-email"><span class="err" id="e-email" aria-live="polite"></span></div>
+          <div class="f"><label for="c-msg">What needs clearing up?</label><textarea id="c-msg" name="message" autocomplete="off" placeholder="e.g. Our requirements live in 14 chats…" aria-describedby="e-msg"></textarea><span class="err" id="e-msg" aria-live="polite"></span></div>
+          <div class="acts"><button class="pill" type="submit">Prepare Email</button><a class="pill y" id="mailto" href="mailto:arorasudhansh31@gmail.com" hidden>Open in Email App</a></div>
+          <p class="note" id="note" aria-live="polite"></p>
+        </form>
+        <div class="linkstk" style="left:600px;top:34px;background:var(--y);--r:2deg"><b>Email</b><span id="addr">arorasudhansh31@gmail.com</span><button type="button" id="copy">Copy Email</button></div>
+        <a class="linkstk" href="https://www.linkedin.com/in/sudhansh-arora/" target="_blank" rel="noopener" style="left:840px;top:44px;background:var(--teal);--r:-1.5deg"><b>LinkedIn ↗</b><span>in/sudhansh-arora</span></a>
+        <a class="linkstk" href="https://github.com/Sudhansh3110" target="_blank" rel="noopener" style="left:720px;top:214px;background:var(--rose);--r:1deg"><b>GitHub ↗</b><span>Sudhansh3110</span></a>
+      </div>
+    </section>
+
+    <div class="abs cursor" style="left:880px;top:300px;--c:#E5484D" aria-hidden="true"><svg width="16" height="20" viewBox="0 0 16 20"><path d="M1 1l13 9-6 1.5L5 18z" fill="#E5484D" stroke="#fff"/></svg><span>Recruiter</span></div>
+    <div class="abs cursor b" style="left:980px;top:1000px;--c:#0E8A80" aria-hidden="true"><svg width="16" height="20" viewBox="0 0 16 20"><path d="M1 1l13 9-6 1.5L5 18z" fill="#0E8A80" stroke="#fff"/></svg><span>Product owner</span></div>
+  </div>
+
+  <div class="hud hint">Drag to move around</div>
+  <nav class="hud jump" aria-label="Jump to frame">
+    <button type="button" data-go="start">Start</button>
+    <button type="button" data-go="problem">Process</button>
+    <button type="button" data-go="cv">CV</button>
+    <button type="button" data-go="skills">Skills</button>
+    <button type="button" data-go="contact">Contact</button>
+  </nav>
+  <div class="hud zoom" role="group" aria-label="Zoom">
+    <button type="button" id="zout" aria-label="Zoom Out">−</button><span id="zval">100%</span><button type="button" id="zin" aria-label="Zoom In">+</button>
+  </div>
+</main>
+
+<script>
+(function(){
+  var root = document.documentElement;
+  /* theme */
+  function isDark(){ var t = root.getAttribute('data-theme'); return t ? t === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches; }
+  function syncLbl(){ document.getElementById('themelbl').textContent = isDark() ? 'Light' : 'Dark'; }
+  try { var saved = localStorage.getItem('sa-ba-theme'); if (saved) root.setAttribute('data-theme', saved); } catch(e){}
+  syncLbl();
+  document.getElementById('theme').addEventListener('click', function(){
+    var next = isDark() ? 'light' : 'dark'; root.setAttribute('data-theme', next);
+    try { localStorage.setItem('sa-ba-theme', next); } catch(e){}
+    syncLbl();
+  });
+
+  var board = document.getElementById('board'), world = document.getElementById('world'), zval = document.getElementById('zval');
+  var mobile = matchMedia('(max-width: 900px)');
+  var cam = {x:0, y:0, s:1};
+  var FRAMES = {start:[80,40,1560,1000], problem:[80,540,1460,480], cv:[1580,20,680,1020], skills:[80,1040,960,460], contact:[1080,1040,1180,500]};
+
+  function apply(glide){
+    world.classList.toggle('glide', !!glide);
+    world.style.transform = 'translate(' + cam.x + 'px,' + cam.y + 'px) scale(' + cam.s + ')';
+    zval.textContent = Math.round(cam.s * 100) + '%';
+  }
+  function fit(name, glide){
+    var f = FRAMES[name], W = board.clientWidth, H = board.clientHeight - 70;
+    cam.s = Math.max(.35, Math.min(1.1, Math.min(W / f[2], H / f[3])));
+    cam.x = (W - f[2] * cam.s) / 2 - f[0] * cam.s;
+    cam.y = (H - f[3] * cam.s) / 2 - f[1] * cam.s + 10;
+    apply(glide);
+    document.querySelectorAll('.jump button').forEach(function(b){ b.setAttribute('aria-pressed', b.getAttribute('data-go') === name ? 'true' : 'false'); });
+  }
+  function zoomAt(factor, px, py){
+    var ns = Math.max(.35, Math.min(1.6, cam.s * factor));
+    cam.x = px - (px - cam.x) * (ns / cam.s);
+    cam.y = py - (py - cam.y) * (ns / cam.s);
+    cam.s = ns; apply(false);
+  }
+
+  function go(name){
+    if (mobile.matches){
+      var el = document.getElementById('f-' + name);
+      if (el) el.scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block:'start'});
+      return;
+    }
+    fit(name, true);
+  }
+  document.addEventListener('click', function(e){ var g = e.target.closest('[data-go]'); if (g) go(g.getAttribute('data-go')); });
+  document.getElementById('zin').addEventListener('click', function(){ zoomAt(1.2, board.clientWidth / 2, board.clientHeight / 2); });
+  document.getElementById('zout').addEventListener('click', function(){ zoomAt(1 / 1.2, board.clientWidth / 2, board.clientHeight / 2); });
+
+  /* drag to pan */
+  var drag = null;
+  board.addEventListener('pointerdown', function(e){
+    if (mobile.matches || e.button !== 0) return;
+    if (e.target.closest('a,button,input,textarea,label,.hud,form')) return;
+    drag = {x:e.clientX, y:e.clientY, cx:cam.x, cy:cam.y};
+    board.classList.add('dragging'); board.setPointerCapture(e.pointerId);
+  });
+  board.addEventListener('pointermove', function(e){ if (!drag) return; cam.x = drag.cx + e.clientX - drag.x; cam.y = drag.cy + e.clientY - drag.y; apply(false); });
+  function end(){ drag = null; board.classList.remove('dragging'); }
+  board.addEventListener('pointerup', end); board.addEventListener('pointercancel', end);
+
+  /* wheel: pan, ctrl+wheel: zoom */
+  board.addEventListener('wheel', function(e){
+    if (mobile.matches) return;
+    e.preventDefault();
+    var r = board.getBoundingClientRect();
+    if (e.ctrlKey || e.metaKey) zoomAt(e.deltaY < 0 ? 1.08 : 1 / 1.08, e.clientX - r.left, e.clientY - r.top);
+    else { cam.x -= e.deltaX; cam.y -= e.deltaY; apply(false); }
+  }, {passive:false});
+
+  /* keyboard */
+  board.addEventListener('keydown', function(e){
+    if (mobile.matches || e.target !== board) return;
+    var step = 60, k = e.key;
+    if (k === 'ArrowLeft'){ cam.x += step; } else if (k === 'ArrowRight'){ cam.x -= step; }
+    else if (k === 'ArrowUp'){ cam.y += step; } else if (k === 'ArrowDown'){ cam.y -= step; }
+    else if (k === '+' || k === '='){ zoomAt(1.2, board.clientWidth / 2, board.clientHeight / 2); e.preventDefault(); return; }
+    else if (k === '-'){ zoomAt(1 / 1.2, board.clientWidth / 2, board.clientHeight / 2); e.preventDefault(); return; }
+    else return;
+    e.preventDefault(); apply(true);
+  });
+
+  function init(){ if (!mobile.matches) fit('start', false); else world.style.transform = ''; }
+  init();
+  window.addEventListener('resize', function(){ clearTimeout(init._t); init._t = setTimeout(init, 150); });
+
+  /* contact */
+  var ADDR = 'arorasudhansh31@gmail.com';
+  document.getElementById('form').addEventListener('submit', function(e){
+    e.preventDefault();
+    var em = document.getElementById('c-email'), msg = document.getElementById('c-msg');
+    var eEm = document.getElementById('e-email'), eMsg = document.getElementById('e-msg');
+    eEm.textContent = ''; eMsg.textContent = ''; var bad = null;
+    if (!/^\S+@\S+\.\S+$/.test(em.value.trim())){ eEm.textContent = 'Enter a valid email so he can reply, e.g. priya@company.com.'; bad = bad || em; }
+    if (!msg.value.trim()){ eMsg.textContent = 'Add a line about the problem so he knows where to start.'; bad = bad || msg; }
+    if (bad){ bad.focus(); return; }
+    var link = document.getElementById('mailto');
+    link.href = 'mailto:' + ADDR + '?subject=' + encodeURIComponent('Business analyst role') + '&body=' + encodeURIComponent(msg.value.trim() + '\n\n- ' + em.value.trim());
+    link.hidden = false;
+    document.getElementById('note').textContent = 'Ready. This board can’t send mail itself, so open it in your email app or copy the address.';
+  });
+  var copy = document.getElementById('copy');
+  copy.addEventListener('click', function(){
+    function sel(){ var r = document.createRange(); r.selectNodeContents(document.getElementById('addr')); var s = getSelection(); s.removeAllRanges(); s.addRange(r); copy.textContent = 'Selected, press Ctrl+C'; }
+    try { navigator.clipboard.writeText(ADDR).then(function(){ copy.textContent = 'Copied'; setTimeout(function(){ copy.textContent = 'Copy Email'; }, 1600); }, sel); } catch(err){ sel(); }
+  });
+})();
+</script>
+</body>
+</html>
